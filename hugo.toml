@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://blog.snowhee.online/'
 languageCode = 'en-us'
 title = '草堆'
 theme = 'cactus'
