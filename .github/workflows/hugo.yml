@@ -57,6 +57,10 @@ jobs:
           hugo \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+            -d "./public"
+      - name: List output directories
+        run: ls -la
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
