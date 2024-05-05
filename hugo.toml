@@ -2,7 +2,4 @@ baseURL = 'https://blog.snowhee.online/'
 languageCode = 'en-us'
 title = '草堆'
 theme = 'cactus'
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+publishDir = "public"
