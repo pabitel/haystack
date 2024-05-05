@@ -57,7 +57,6 @@ jobs:
           hugo \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
-            -d "./public"
       - name: List output directories
         run: ls -la
         
