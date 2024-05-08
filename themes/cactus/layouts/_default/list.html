@@ -7,7 +7,7 @@
     {{ $pages = .Pages }}
   {{ end }}
 
-  {{ range (sort $pages "Date" "desc") }}
+  {{ range where (sort $pages "Date" "desc") "Type" "!=" "inner" }}
     {{ $pageYear := (.Date.Format "2006") }}
     {{ if (ne $pageYear ($.Scratch.Get "year")) }}
     {{ $.Scratch.Set "year" $pageYear }}

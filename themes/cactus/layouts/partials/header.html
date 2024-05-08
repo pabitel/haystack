@@ -17,7 +17,7 @@
         <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
       </li>
       {{ range .Site.Menus.main }}
-        <li><a href="{{ .URL }}"><b>{{ .Name }}</b></a></li>
+        <li><a href="{{ .URL }}" style="font-size: medium;"><b>{{ .Name }}</b></a></li>
       {{ end }}
     </ul>
   </div>
