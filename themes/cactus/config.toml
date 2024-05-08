@@ -100,3 +100,8 @@ weight = 5
   [[params.social]]
     name = "email"
     link = "m.pabitel@hotmail.com"  # no need for "mailto:" in the head
+  
+[module]
+  pagers = ["github.com/digitalcraftsman/paginator"]
+[paginator]
+  perPage = 5

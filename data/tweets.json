@@ -1,10 +1,10 @@
 [
   {
-    "text": "这是第一条测试tweet",
-    "user": "John Doe"
+    "text": "This is my first tweet!",
+    "date": "2023-02-20T14:30:00Z"
   },
   {
-    "text": "再来一条tweet!",
-    "user": "Jane Smith"
+    "text": "I love Hugo!",
+    "date": "2023-02-21T10:45:00Z"
   }
 ]

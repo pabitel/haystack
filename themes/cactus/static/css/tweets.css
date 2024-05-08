@@ -1,0 +1,20 @@
+.tweet {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.tweet p {
+  margin: 0;
+}
+
+.tweet small {
+  color: #666;
+}
+
+.tweet-ul {
+  list-style: none;
+}
+
+/* Add the digest hash to the CSS file */
+@import "css/style.css?digest";

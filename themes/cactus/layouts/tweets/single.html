@@ -1,9 +1,116 @@
 {{ define "main" }}
-<div>
-  {{ range $index, $tweet := .Site.Data.tweets }}
-  <div class="tweet">
-    <p>{{ $tweet.text }}</p>
-  </div>
-  {{ end }}
+<h2>闲话</h2>
+<div id="tweets-container">
+  <!-- Tweets will be dynamically loaded here -->
 </div>
+<nav class="pagination">
+  <a onclick="loadPage(currentPage - 1)" id="prev-btn" class="btn">Previous</a>
+  <span>Page <span id="page-number"></span> of <span id="total-pages"></span></span>
+  <a onclick="loadPage(currentPage + 1)" id="next-btn" class="btn">Next</a>
+</nav>
+
+<script>
+  let currentPage = 1;
+  let totalPages = 1;
+  let pageSize = 10;
+
+  function loadPage(page) {
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+
+    fetch(`https://say-ten.vercel.app/api/tweets?page=${currentPage}&per_page=10`)
+      .then(response => response.json())
+      .then(data => {
+        totalPages = Math.ceil(data.total / data.tweets.length);
+        document.getElementById('page-number').textContent = currentPage;
+        document.getElementById('total-pages').textContent = totalPages;
+
+        const container = document.getElementById('tweets-container');
+        container.innerHTML = ''; // 清空现有的tweets
+        data.tweets.forEach(tweet => {
+          const div = document.createElement('div');
+          div.className = 'tweet';
+          div.innerHTML = `<p>${tweet.content}</p><small>${tweet.date}</small>`;
+          container.appendChild(div);
+        });
+        // 更新按钮状态
+        document.getElementById('prev-btn').disabled = currentPage === 1;
+        document.getElementById('next-btn').disabled = currentPage === totalPages;
+      })
+      .catch(error => console.error('Error fetching tweets:', error));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => loadPage(currentPage));
+</script>
+<style>
+  body {
+    /* 根据截图，使用更传统的字体 */
+    color: #333;
+    /* 暗色文本 */
+    background-color: #fff;
+    /* 纯白背景 */
+  }
+
+  h1 {
+    text-align: left;
+    color: #333;
+  }
+
+  .tweets-container {
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .tweet {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+  }
+
+  .tweet:last-child {
+    border-bottom: none;
+  }
+
+  .tweet p {
+    margin: 0;
+  }
+
+  .tweet small {
+    color: #666;
+    font-size: 12px;
+  }
+
+  .pagination {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .btn {
+    color: #333;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #f0f0f0;
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .pagination {
+    text-align: left;
+    /* 将分页导航调整为左对齐 */
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+</style>
+
 {{ end }}
