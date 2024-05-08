@@ -4,9 +4,9 @@
   <!-- Tweets will be dynamically loaded here -->
 </div>
 <nav class="pagination">
-  <a onclick="loadPage(currentPage - 1)" id="prev-btn" class="btn">Previous</a>
-  <span>Page <span id="page-number"></span> of <span id="total-pages"></span></span>
-  <a onclick="loadPage(currentPage + 1)" id="next-btn" class="btn">Next</a>
+  <a onclick="loadPage(currentPage - 1)" id="prev-btn" class="btn">上一页</a>
+  <span> <span id="page-number"></span> / <span id="total-pages"></span></span>
+  <a onclick="loadPage(currentPage + 1)" id="next-btn" class="btn">下一页</a>
 </nav>
 
 <script>
@@ -30,7 +30,9 @@
         data.tweets.forEach(tweet => {
           const div = document.createElement('div');
           div.className = 'tweet';
-          div.innerHTML = `<p>${tweet.content}</p><small>${tweet.date}</small>`;
+          let date = new Date(tweet.date);
+          let formattedDate = date.toISOString().split('T')[0];
+          div.innerHTML = `<p>${tweet.content}</p><small>${formattedDate}</small>`;
           container.appendChild(div);
         });
         // 更新按钮状态
