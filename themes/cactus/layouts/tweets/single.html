@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div>
+  {{ range $index, $tweet := .Site.Data.tweets }}
+  <div class="tweet">
+    <p>{{ $tweet.text }}</p>
+  </div>
+  {{ end }}
+</div>
+{{ end }}
