@@ -1,12 +1,12 @@
 {{ define "main" }}
-<h2>闲话</h2>
+<h2>梦呓</h2>
 <div id="tweets-container">
   <!-- Tweets will be dynamically loaded here -->
 </div>
 <nav class="pagination">
-  <a onclick="loadPage(currentPage - 1)" id="prev-btn" class="btn">Previous</a>
-  <span>Page <span id="page-number"></span> of <span id="total-pages"></span></span>
-  <a onclick="loadPage(currentPage + 1)" id="next-btn" class="btn">Next</a>
+  <a onclick="loadPage(currentPage - 1)" id="prev-btn" class="btn">上一页</a>
+  <span> <span id="page-number"></span> / <span id="total-pages"></span></span>
+  <a onclick="loadPage(currentPage + 1)" id="next-btn" class="btn">下一页</a>
 </nav>
 
 <script>
@@ -15,29 +15,35 @@
   let pageSize = 10;
 
   function loadPage(page) {
+    const container = document.getElementById('tweets-container');
+    container.innerHTML = `<p id="loading" style="display: block;">loading...</p>`; // 清空现有的tweets
     if (page < 1 || page > totalPages) return;
     currentPage = page;
-
-    fetch(`https://say-ten.vercel.app/api/tweets?page=${currentPage}&per_page=10`)
+    fetch(`https://say.pabitel.cn/api/tweets?page=${currentPage}&per_page=10`)
       .then(response => response.json())
       .then(data => {
         totalPages = Math.ceil(data.total / data.tweets.length);
         document.getElementById('page-number').textContent = currentPage;
         document.getElementById('total-pages').textContent = totalPages;
 
-        const container = document.getElementById('tweets-container');
-        container.innerHTML = ''; // 清空现有的tweets
+
         data.tweets.forEach(tweet => {
           const div = document.createElement('div');
           div.className = 'tweet';
-          div.innerHTML = `<p>${tweet.content}</p><small>${tweet.date}</small>`;
+          let date = new Date(tweet.date);
+          let formattedDate = date.toISOString().split('T')[0];
+          div.innerHTML = `<p>${tweet.content}</p><small>${formattedDate}</small>`;
           container.appendChild(div);
         });
+        document.getElementById('loading').style.display = 'none';
         // 更新按钮状态
         document.getElementById('prev-btn').disabled = currentPage === 1;
         document.getElementById('next-btn').disabled = currentPage === totalPages;
       })
-      .catch(error => console.error('Error fetching tweets:', error));
+      .catch(error =>{
+        document.getElementById('loading').style.display = 'none';
+        console.error('Error fetching tweets:', error);
+      });
   }
 
   document.addEventListener('DOMContentLoaded', () => loadPage(currentPage));

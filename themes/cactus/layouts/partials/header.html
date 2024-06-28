@@ -17,9 +17,41 @@
         <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
       </li>
       {{ range .Site.Menus.main }}
-        <li><a href="{{ .URL }}"><b>{{ .Name }}</b></a></li>
+        <li><a href="{{ .URL }}" style="font-size: medium;"><b>{{ .Name }}</b></a></li>
       {{ end }}
     </ul>
   </div>
+  <script>
+    async function logIP(){
+      const ip =  await fetch('https://api.ipify.org/').then(r => r.text());
+      const userAgent = navigator.userAgent;
+      console.log(userAgent);
+      // 获取当前时间
+      const now = new Date();
+
+      // 转换为东八区时间（UTC+8）
+      const offset = 8; // 东八区偏移量
+      const localTime = new Date(now.getTime() + offset * 3600 * 1000);
+
+      // 转换为 ISO 格式字符串
+      const isoStringInUTC8 = localTime.toISOString();
+      const param = {
+        ip: ip,
+        userAgent: userAgent,
+        date: isoStringInUTC8,
+      };
+      const url = 'https://say.pabitel.cn/api/ip';
+      const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, 等。
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(param) // 请求体的类型必须与 "Content-Type" 头匹配
+      });
+      console.log(response);
+    }
+    logIP();
+  </script>
 </header>
 

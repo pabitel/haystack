@@ -1,4 +1,4 @@
-baseURL = "https://blog.snowhee.online"
+baseURL = "https://pabitel.cn"
 languageCode = "en-us"
 title = "草堆"
 theme = "cactus"
@@ -26,7 +26,7 @@ url = "/tags"
 weight = 3
 
 [[menu.main]]
-name = "闲话"
+name = "梦呓"
 url = "/tweets"
 weight = 4
 
@@ -76,7 +76,7 @@ weight = 5
   # Post page settings
   show_updated = true # default
   showReadTime = true # default
-
+  
   [params.comments]
     enabled = false # default
     engine = "cactus_comments" # only disqus, utterances, and cactus_comments is supported
